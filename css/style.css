@@ -1,0 +1,43 @@
+/*body *
+{
+	position: absolute;
+}*/
+
+.GameBg {
+    position: absolute;
+    height: 100%;
+    background-image: url(../img/GameField/BitFlowBG2.png);
+    background-repeat: repeat-x;
+    background-size: contain;
+}
+
+div.GameBg div.Clock {
+    position: relative;
+    background-image: url(../img/GameField/Clock.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: calc(11%);
+    height: calc(7%);
+}
+
+
+div.GameBg div.Clock div {
+    display: inline-block;
+    position: absolute;
+    left: calc(20%);
+    top: calc(31%);
+    color: yellow;
+}
+
+
+
+
+
+
+
+
+
+
+* {
+    outline: 1px solid black;
+}
