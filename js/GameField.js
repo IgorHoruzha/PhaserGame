@@ -28,14 +28,30 @@ function GameInterface(game) {
     var self = this;
     var currentGame = game;
     this.CreateGame = function() {
-
         currentGame.physics.startSystem(Phaser.Physics.ARCADE);
 
-        this.background = currentGame.add.sprite(0, 0, 'bg');
+        this.background = currentGame.add.tileSprite(0, 0, 1920, 1080, 'bg');
 
-        this.menu = currentGame.add.sprite(currentGame.world.width - 260, 170, 'menu');
-        this.stats = currentGame.add.sprite(currentGame.world.width - 470, 170, 'stats');
-        this.upgrades = currentGame.add.sprite(currentGame.world.width - 470, 50, 'upgrades');
+
+        //Menu
+        this.menu = game.add.button(currentGame.world.width - 260,
+            170, "menu", () => {
+                ///////TODO: SAVE GAME  HERE!
+                localStorage.setItem("gamesave", JSON.stringify(playar));
+                game.state.start('mainMenu', true);
+            }, this, 0, 0, 1, 0);
+
+        //Stats     
+         this.stats = game.add.button(currentGame.world.width - 470,
+            170, "stats", () => {
+            alert("Sore: " +playar.countCoints);
+            }, this, 0, 0, 1, 0);
+        //Ubgrades    
+          this.stats = game.add.button(currentGame.world.width - 470,
+            50, "upgrades", () => {
+            alert("Click");
+            }, this, 0, 0, 1, 0);
+      
 
         //Clock
         this.clock = currentGame.add.sprite(50, 50, 'clock');
@@ -86,10 +102,13 @@ function GameInterface(game) {
 
         this.autoSaveTimer = game.time.create(false);
         this.autoSaveTimer.loop(5000, () => {
-           localStorage.setItem("gamesave", JSON.stringify(playar))
+            ///////TODO: SAVE GAME  HERE!
+            localStorage.setItem("gamesave", JSON.stringify(playar));
         }, this);
-         this.autoSaveTimer.start();
+        this.autoSaveTimer.start();
     }
+
+
 
     this.CreateCoints = function() {
         this.coins.enableBody = true;
