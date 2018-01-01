@@ -15,9 +15,4 @@ function reviwerPlayer(key, value) {
     return value;
 }
 var playar = null;
-if (localStorage.gamesave) {
-	
-    playar = JSON.parse(localStorage.gamesave, reviwerPlayer);
-} else {
-playar= new Player();
-}
+ 
