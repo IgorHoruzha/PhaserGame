@@ -26,8 +26,8 @@ var mainState = {
     },
 
     update: function() {
-        var hitPlatform = game.physics.arcade.collide(this.GameField.coins, this.GameField.conveyor);
-        game.physics.arcade.overlap(this.GameField.toilet, this.GameField.coins, (toilet, coin) => {
+        var hitPlatform = game.physics.arcade.collide(this.GameField.coins.coins, this.GameField.conveyor);
+        game.physics.arcade.overlap(this.GameField.toilet, this.GameField.coins.coins, (toilet, coin) => {
             this.GameField.DeleteCoin(toilet, coin);;
             this.GameField.toiletCoinCount.text = ++playar.toiletCoints;
             this.GameField.factor.text = "X " + (playar.gameFactor = playar.catchStrick = 1);
@@ -40,8 +40,8 @@ var mainState = {
 
         // game.debug.body(this.GameField.toilet);
         // game.debug.body(this.GameField.conveyor);
-        // game.debug.body(this.GameField.catchPoint);
-        // this.GameField.coins.forEach((a, b) => { game.debug.body(a); }, this, true);
+      //   game.debug.body(this.GameField.catchPoint);
+    //     this.GameField.coins.coins.forEach((a, b) => { game.debug.body(a); }, this, true);
     },
 
 };
