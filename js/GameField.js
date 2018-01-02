@@ -27,6 +27,7 @@ function GameInterface(game) {
 
     var self = this;
     var currentGame = game;
+
     this.CreateGame = function() {
         currentGame.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -42,16 +43,27 @@ function GameInterface(game) {
             }, this, 0, 0, 1, 0);
 
         //Stats     
-         this.stats = game.add.button(currentGame.world.width - 470,
+        this.stats = game.add.button(currentGame.world.width - 470,
             170, "stats", () => {
-            alert("Sore: " +playar.countCoints);
+                alert("Nickname:" + playar.nickname + "\nSore: " + playar.countCoints);
             }, this, 0, 0, 1, 0);
         //Ubgrades    
-          this.stats = game.add.button(currentGame.world.width - 470,
+        this.upgrades = game.add.button(currentGame.world.width - 470,
             50, "upgrades", () => {
-            alert("Click");
+                alert("upgrades Lavel "+(++lavel));
+               this.coins.forEach((coin, b) => {coin.kill(); }, this, true);
+                 this.coins = game.add.emitter(320, 340, 1);        
+                currentGame.physics.enable(this.coins, Phaser.Physics.ARCADE);
+                this.coins.setXSpeed(100, 200);
+                this.coins.makeParticles('coin', 0, 250, true, true);
+                this.coins.bounce.setTo(0.2, 0.5);
+                
+                this.coins.start(false, 10000, 1000);
+                this.coinsTimer.stop();
+                   currentGame.world.bringToTop( this.videoCard);
+                     currentGame.world.bringToTop(this.factor);
             }, this, 0, 0, 1, 0);
-      
+
 
         //Clock
         this.clock = currentGame.add.sprite(50, 50, 'clock');
@@ -85,58 +97,60 @@ function GameInterface(game) {
         this.toiletCoinCount = currentGame.add.text(currentGame.world.width - 170, currentGame.world.height - 520, playar.toiletCoints, countToiletCoinStyle);
 
         //coins
-        this.coins = currentGame.add.group();
-        currentGame.physics.enable(this.coins, Phaser.Physics.ARCADE);
-        this.coinsTimer = game.time.create(false);
-        this.coinsTimer.loop(2000, this.CreateCoints, this);
-        this.coinsTimer.start();
+      
+            this.coins = currentGame.add.group();
+            currentGame.physics.enable(this.coins, Phaser.Physics.ARCADE);
+            this.coinsTimer = game.time.create(false);
+            this.coinsTimer.loop(2000, this.CreateCoints, this);
+            this.coinsTimer.start();
+        
+            //videoCard
+            this.videoCard = currentGame.add.sprite(90, 250, 'videoCard');
 
-        //videoCard
-        this.videoCard = currentGame.add.sprite(90, 250, 'videoCard');
-        let factorStyle = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-        this.factor = currentGame.add.text(310, 335, "X " + playar.gameFactor, countCoinStyle);
+            let factorStyle = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+            this.factor = currentGame.add.text(310, 335, "X " + playar.gameFactor, countCoinStyle);
 
-        //KnifeSwitch
-        this.knifeSwitch = currentGame.add.button(currentGame.world.centerX - 100, currentGame.world.centerY + 200, "CatchButton", this.TryCatch, this, 0, 0, 1, 0);
+            //KnifeSwitch
+            this.knifeSwitch = currentGame.add.button(currentGame.world.centerX - 100, currentGame.world.centerY + 200, "CatchButton", this.TryCatch, this, 0, 0, 1, 0);
 
 
-        this.autoSaveTimer = game.time.create(false);
-        this.autoSaveTimer.loop(5000, () => {
-            ///////TODO: SAVE GAME  HERE!
-            localStorage.setItem("gamesave", JSON.stringify(playar));
-        }, this);
-        this.autoSaveTimer.start();
+            this.autoSaveTimer = game.time.create(false);
+            this.autoSaveTimer.loop(5000, () => {
+                ///////TODO: SAVE GAME  HERE!
+                localStorage.setItem("gamesave", JSON.stringify(playar));
+            }, this);
+            this.autoSaveTimer.start();
+        }
+
+
+
+        this.CreateCoints = function() {
+            this.coins.enableBody = true;
+            let coin = this.coins.create(250, 300, 'coin');
+            coin.body.gravity.y = 55;
+            coin.body.bounce.y = 0.2 + Math.random() * 0.2;
+            coin.body.velocity.x = 150;
+        }
+
+
+        this.TryCatch = function() {
+            currentGame.physics.arcade.overlap(this.catchPoint, this.coins, (catchPoint, coin) => {
+                this.DeleteCoin(catchPoint, coin);
+                playar.countCoints += 1 * playar.gameFactor;
+                this.countCoin.text = playar.countCoints;
+
+                playar.catchStrick++;
+
+                if (playar.catchStrick >= 10) {
+                    playar.gameFactor++;
+                    this.factor.text = "X " + playar.gameFactor;
+                    playar.catchStrick = 1;
+                }
+
+            }, null, this);
+        }
+
+        this.DeleteCoin = function(obj, coin) {;
+            coin.kill(currentGame);
+        }
     }
-
-
-
-    this.CreateCoints = function() {
-        this.coins.enableBody = true;
-        let coin = this.coins.create(250, 300, 'coin');
-        coin.body.gravity.y = 55;
-        coin.body.bounce.y = 0.2 + Math.random() * 0.2;
-        coin.body.velocity.x = 150;
-    }
-
-
-    this.TryCatch = function() {
-        currentGame.physics.arcade.overlap(this.catchPoint, this.coins, (catchPoint, coin) => {
-            this.DeleteCoin(catchPoint, coin);
-            playar.countCoints += 1 * playar.gameFactor;
-            this.countCoin.text = playar.countCoints;
-
-            playar.catchStrick++;
-
-            if (playar.catchStrick >= 10) {
-                playar.gameFactor++;
-                this.factor.text = "X " + playar.gameFactor;
-                playar.catchStrick = 1;
-            }
-
-        }, null, this);
-    }
-
-    this.DeleteCoin = function(obj, coin) {;
-        coin.kill(currentGame);
-    }
-}

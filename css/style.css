@@ -1,29 +1,33 @@
-/*body *
-{
-    position: absolute;
-}*/
-
-
-
-#phaser-game{
+#phaser-game {
     display: inline-block;
     margin: 0 auto;
 }
 
-#GameBlock{
-        background: url(https://phaser.io/images/bg-body4.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
+body {
+    background-color: #e0e4f1;
+}
+
+#GameBlock {
+    background: url(https://phaser.io/images/bg-body4.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+footer {
+    color: #fff;
+    font-size: 15px;
+    line-height: 20px;
+    position: relative;
+    padding: 350px 0 56px;
+    text-shadow: 1px 1px 0 #000;
+    background: url(https://phaser.io/images/bg-footer.jpg) no-repeat 50% 100% #e0e4f1;
+    background-size: 100% auto;
 }
 
 
-div#GameBlock {}
-
-div#GameBlock {}
-
-
-#phaser-game>canvas{
-
+.resetPM {
+    margin: 0;
+    padding: 0;
 }
 
-
+#phaser-game>canvas {}

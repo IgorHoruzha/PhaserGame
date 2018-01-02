@@ -1,22 +1,22 @@
 var mainState = {
 
     preload: function() {
-        this.load.image('bg', '../img/GameField/BitFlowBG.png');
+        this.load.image('bg', '../../img/GameField/BitFlowBG.png');
 
-        this.load.image('menu', '../img/GameField/GameButton/Menu.png');
-        this.load.image('stats', '../img/GameField/GameButton/Stats.png');
-        this.load.image('upgrades', '../img/GameField/GameButton/Upgrades.png');
+        this.load.image('menu', '../../img/GameField/GameButton/Menu.png');
+        this.load.image('stats', '../../img/GameField/GameButton/Stats.png');
+        this.load.image('upgrades', '../../img/GameField/GameButton/Upgrades.png');
 
-        this.load.image('clock', '../img/GameField/Clock.png');
+        this.load.image('clock', '../../img/GameField/Clock.png');
 
-        this.load.image('toilet', '../img/GameField/Toilet.png');
-        this.load.image('CatchButton', '../img/GameField/CatchButton.png');
+        this.load.image('toilet', '../../img/GameField/Toilet.png');
+        this.load.image('CatchButton', '../../img/GameField/CatchButton.png');
 
-        this.load.image('videoCard', '../img/GameField/VideoCard.png');
+        this.load.image('videoCard', '../../img/GameField/VideoCard.png');
 
-        this.load.image('conveyor', '../img/GameField/conveyor.png'); //reset
+        this.load.image('conveyor', '../../img/GameField/conveyor.png'); //reset
 
-        this.load.image('coin', '../img/GameField/coin.png'); //reset
+        this.load.image('coin', '../../img/GameField/Coin.png'); //reset
     },
 
     create: function() {
